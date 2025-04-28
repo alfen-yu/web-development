@@ -9,5 +9,9 @@ I'm currently re-learning web development frameworks through structured courses 
 <!-- - `/css-basics/` — Styling, layouts, flexbox, grid -->
 <!-- - `/responsive-design/` — Making pages mobile friendly -->
 <!-- - `/dom-manipulation/` — Interactive web pages -->
-- `/calculator-app` — iOS UI calculator app made in html, css, javascript
-- `/javascript-codes/` — Variables, functions, loops
+## Mini-Projects 
+ - `/wordle` — clone of the famous wordle game. made with html, css, js 
+ - `/calculator` — iOS UI calculator app made in html, css, javascript
+
+## Code Examples 
+ - `/javascript-codes/` — Variables, functions, loops
