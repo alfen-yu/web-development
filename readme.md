@@ -8,6 +8,6 @@ I'm currently re-learning web development frameworks through structured courses 
 <!-- - `/html-basics/` — Basic HTML elements practice -->
 <!-- - `/css-basics/` — Styling, layouts, flexbox, grid -->
 <!-- - `/responsive-design/` — Making pages mobile friendly -->
-<!-- - `/javascript-fundamentals/` — Variables, functions, loops -->
 <!-- - `/dom-manipulation/` — Interactive web pages -->
 - `/calculator-app` — iOS UI calculator app made in html, css, javascript
+- `/javascript-codes/` — Variables, functions, loops
