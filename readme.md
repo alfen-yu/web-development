@@ -1,4 +1,4 @@
-# Web Development Practice
+# WebDev 
 
 This repository contains my web development practice projects and exercises.  
 I'm currently re-learning web development frameworks through structured courses and tutorials.
