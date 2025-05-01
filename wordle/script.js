@@ -1,6 +1,7 @@
+const grid = document.getElementById("grid");
+
 // create the wordle grid boxes
 function createGrid(grid, rows, cols) {
-    const grid = document.getElementById(grid);
     for (let i = 0; i < rows; i++) {
         const row = document.createElement("div");
         row.classList.add("box-row");
@@ -14,4 +15,4 @@ function createGrid(grid, rows, cols) {
     }
 }
 
-createGrid("grid", 6, 5);
+createGrid(grid, 6, 5);
