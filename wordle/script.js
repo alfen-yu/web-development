@@ -46,6 +46,14 @@ async function postWord(word) {
     return response.validWord;
 }
 
+// fetches the word from the API
+async function fetchWord() {
+    const promise = await fetch(WORD_URL); 
+    const response = await promise.json(); // waits again until the response is processed
+    return response.word; 
+}
+
+// updates the box with the word 
 function updateBox(value) {
     if (boxCounter < TOTAL_ROWS * WORD_LENGTH) {
         const box = document.getElementById(boxCounter);
@@ -56,13 +64,15 @@ function updateBox(value) {
 
 function handleBackspace() {
     // handles the removal of last word typed, doesn't let go out of row 
-    if (boxCounter > 0 && boxCounter % WORD_LENGTH !== 0) {
+    // the counter should be greater than zero, and it should be less than the word length (5) after taking the modolus so as to restrict it in the row. 
+    if (boxCounter > 0 && boxCounter % WORD_LENGTH < WORD_LENGTH) {
         boxCounter--;
         const box = document.getElementById(boxCounter);
         box.innerHTML = "";
     }
 }
 
+// gets the current word in the row that user typed 
 function getWord() {
     let word = "";
     for (let i = boxCounter - WORD_LENGTH; i < boxCounter; i++) {
@@ -72,24 +82,34 @@ function getWord() {
     return word.toLowerCase();
 }
 
+const txt = fetchWord().then((e) => {
+    console.log(e);
+});
+
+function validateWord(word) {
+    const wordleWord = fetchWord().then();
+}
+
+// handles the functionality of enter pressed 
 async function handleEnter() {
     if (boxCounter === WORD_LENGTH * (currentRow + 1)) {
         const word = getWord();
         const valid = await postWord(word);
-        console.log(word)
 
         if (valid) {
             currentRow++;
-            console.log("congratulations the word is correct");
+            validateWord(word);
+            alert("congratulations the word is correct");
         } else {
-            console.log("wrong word, please check again");
+            alert("wrong word, please check again");
         }
     } else {
-        console.log("COMPLETE THE WORD");
+        alert("COMPLETE THE WORD DICKHEAD");
         return;
     }
 }
 
+// handles the key pressed events 
 document.addEventListener("keydown", async (e) => {
     const key = e.key;
 
