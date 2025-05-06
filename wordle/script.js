@@ -12,7 +12,7 @@ function createGrid(grid, rows, cols) {
             box.id = boxIdCounter;
             box.classList.add("box");
             row.appendChild(box);
-            boxIdCounter += 1; 
+            boxIdCounter += 1;
         }
         grid.appendChild(row);
     }
@@ -29,26 +29,53 @@ function isLetter(letter) {
     return /^[a-zA-Z]$/.test(letter);
 }
 
-// function to check if the user pressed the right key
-// document.querySelector(".box").addEventListener("keydown", (e) => {
-//   if (!isLetter(e.key)) {
-//     e.preventDefault();
-//     console.log(e.key);
-//   }
-// });
+// function to update the characters in boxes 
+let boxCounter = 0;
 
-let updateBoxCounter = 0; 
+async function postWord(word) {
+    const promise = await fetch(VALIDATE_URL, {
+        method: "POST", 
+        body: JSON.stringify({"word": word})
+    }); 
 
-function updateBox(value) {
-    let box = document.getElementById(updateBoxCounter); 
-    box.innerText = value.toUpperCase();
-    updateBoxCounter += 1
-    if (updateBoxCounter > 29) updateBoxCounter = 0;
+    const response = await promise.json();
+    const valid = response.validWord; 
+
+    return valid; 
 }
 
-document.addEventListener("keydown", (e) => {
-    if (isLetter(e.key)) {
-        updateBox(e.key);
-        console.log(e.key);
+function validateWord(word) {
+    const validation = postWord(word);
+
+    if (validation === true) {
+        console.log("it works");
+    } else { 
+        console.log("doesn't work");
     }
+}
+
+function updateBox(key, event) {
+    let box = document.getElementById(boxCounter);
+    
+    if (boxCounter < 30) {
+        if (((boxCounter) % 5) === 0 && boxCounter != 0) {
+            if (key !== "Enter") {
+                alert("please input enter first");
+                event.preventDefault();
+            } else if (key === "Enter") {
+                validateWord();
+            }
+        } else {
+            if (isLetter(key)) {
+                box.innerHTML = key.toUpperCase();
+                console.log(boxCounter);
+                boxCounter += 1;
+            }
+        }
+    }
+}
+
+
+document.addEventListener("keydown", (e) => {
+    updateBox(e.key, e);
 });
