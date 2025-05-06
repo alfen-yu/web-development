@@ -82,12 +82,18 @@ function getWord() {
     return word.toLowerCase();
 }
 
-const txt = fetchWord().then((e) => {
-    console.log(e);
-});
 
-function validateWord(word) {
-    const wordleWord = fetchWord().then();
+// <START THE COMPARISON FUNCTION, START WORKING FROM HERE>
+async function validateWord(word) {
+    const wordleWord = await fetchWord().then();
+    console.log(wordleWord);
+    for (let i = 0; i < wordleWord.length; i++) {
+        for (let j = 0; j < word.length; j++) {
+            if (word[j] === word[i]) {
+                console.log(word[i], word[j]);
+            }
+        }
+    }
 }
 
 // handles the functionality of enter pressed 
