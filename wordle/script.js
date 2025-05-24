@@ -34,14 +34,14 @@ function isLetter(letter) {
     return /^[a-zA-Z]$/.test(letter);
 }
 
-// function to update the characters in boxes 
 
+// checks if the word is a valid 5-letter word 
 async function postWord(word) {
     const promise = await fetch(VALIDATE_URL, {
         method: "POST",
         body: JSON.stringify({ "word": word })
     });
-
+    
     const response = await promise.json();
     return response.validWord;
 }
@@ -53,7 +53,7 @@ async function fetchWord() {
     return response.word; 
 }
 
-// updates the box with the word 
+// updates the box with the letter typed by the user 
 function updateBox(value) {
     if (boxCounter < TOTAL_ROWS * WORD_LENGTH) {
         const box = document.getElementById(boxCounter);
@@ -73,6 +73,7 @@ function handleBackspace() {
 }
 
 // gets the current word in the row that user typed 
+// joins the letters to form the word to validate it with the word validator 
 function getWord() {
     let word = "";
     for (let i = boxCounter - WORD_LENGTH; i < boxCounter; i++) {
@@ -83,15 +84,15 @@ function getWord() {
 }
 
 
-// <START THE COMPARISON FUNCTION, START WORKING FROM HERE>
+// validates the word from the wordle word of the day with the word we typed 
 async function validateWord(word) {
     const wordleWord = await fetchWord().then();
     console.log(wordleWord);
     for (let i = 0; i < wordleWord.length; i++) {
         for (let j = 0; j < word.length; j++) {
             if (word[j] === word[i]) {
-                console.log(word[i], word[j]);
             }
+            console.log(word[i], word[j]);
         }
     }
 }
@@ -105,12 +106,12 @@ async function handleEnter() {
         if (valid) {
             currentRow++;
             validateWord(word);
-            alert("congratulations the word is correct");
+            alert("the word is valid");
         } else {
             alert("wrong word, please check again");
         }
     } else {
-        alert("COMPLETE THE WORD DICKHEAD");
+        alert("the word isn't complete yet.");
         return;
     }
 }
