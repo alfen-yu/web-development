@@ -5,7 +5,6 @@ const WORD_LENGTH = 5;
 const TOTAL_ROWS = 6;
 let currentRow = 0;
 
-
 // create the wordle grid boxes
 function createGrid(grid, rows, cols) {
     for (let i = 0; i < rows; i++) {
@@ -50,6 +49,7 @@ async function postWord(word) {
 async function fetchWord() {
     const promise = await fetch(WORD_URL); 
     const response = await promise.json(); // waits again until the response is processed
+    console.log();
     return response.word; 
 }
 
@@ -83,35 +83,36 @@ function getWord() {
     return word.toLowerCase();
 }
 
+const word = fetchWord().then();
+console.log(word);
 
 // validates the word from the wordle word of the day with the word we typed 
-async function validateWord(word) {
-    const wordleWord = await fetchWord().then();
+function validateWord(typedWord, wordleWord) {
     console.log(wordleWord);
+    console.log(typedWord);
     for (let i = 0; i < wordleWord.length; i++) {
-        for (let j = 0; j < word.length; j++) {
-            if (word[j] === word[i]) {
+        for (let j = 0; j < typedWord.length; j++) {
+            if (typedWord[j] === wordleWord[i]) {
             }
-            console.log(word[i], word[j]);
         }
     }
 }
 
 // handles the functionality of enter pressed 
-async function handleEnter() {
+async function handleEnter(wordleWord) {
     if (boxCounter === WORD_LENGTH * (currentRow + 1)) {
         const word = getWord();
         const valid = await postWord(word);
 
         if (valid) {
             currentRow++;
-            validateWord(word);
-            alert("the word is valid");
+            validateWord(word, wordleWord);
+            alert("The word is valid but doesn't match the wordle word.");
         } else {
-            alert("wrong word, please check again");
+            alert("Not a 5 Letter word.");
         }
     } else {
-        alert("the word isn't complete yet.");
+        alert("Please complete the word first.");
         return;
     }
 }
@@ -119,7 +120,6 @@ async function handleEnter() {
 // handles the key pressed events 
 document.addEventListener("keydown", async (e) => {
     const key = e.key;
-
     if (isLetter(key)) {
         if (boxCounter < TOTAL_ROWS * WORD_LENGTH && boxCounter < (currentRow + 1) * WORD_LENGTH) {
             updateBox(key, e);
